@@ -47,6 +47,7 @@ export type CaseStudy = {
   extraMedia?: Media[];
   image?: { src?: string; alt?: string };
   awards?: string[];
+  whyItMattered?: { draft?: boolean; text: string };
   press?: { outlet: string; date?: string; url: string }[];
 };
 

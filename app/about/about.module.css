@@ -50,6 +50,20 @@
   max-width: 34em;
 }
 
+.personal {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+  max-width: 34em;
+  font-size: var(--fs-lead);
+  line-height: 1.55;
+}
+.personal :global(.ph) {
+  display: inline-block;
+  margin-bottom: 0.6rem;
+  font-size: var(--fs-label);
+}
+
 /* ---------- Experience ---------- */
 
 .role {

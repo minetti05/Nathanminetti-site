@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/meta";
-import { ClosingCta, pageStyles as s } from "@/components/PageBlocks";
+import Link from "next/link";
+import { ClosingCta, DraftTag, pageStyles as s } from "@/components/PageBlocks";
 import { Photo } from "@/components/Photo";
 import { Text } from "@/components/Text";
 import { getPage } from "@/lib/content";
@@ -15,6 +16,7 @@ type About = {
   description: string;
   headline: string;
   intro: string[];
+  personal?: { draft?: boolean; text: string; linkLabel?: string; href?: string };
   portrait?: { src: string; alt: string };
   timelineHeading: string;
   timeline: Role[];
@@ -72,6 +74,19 @@ export default function AboutPage() {
               <Text>{para}</Text>
             </p>
           ))}
+          {page.personal?.text && (
+            <div className={a.personal}>
+              <DraftTag show={!!page.personal.draft} />
+              <p>
+                <Text>{page.personal.text}</Text>{" "}
+                {page.personal.href && page.personal.linkLabel && (
+                  <Link href={page.personal.href} className="link">
+                    {page.personal.linkLabel}
+                  </Link>
+                )}
+              </p>
+            </div>
+          )}
         </div>
       </section>
 

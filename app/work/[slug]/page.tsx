@@ -3,6 +3,7 @@ import { pageMeta } from "@/lib/meta";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MediaPlayer } from "@/components/MediaPlayer";
+import { DraftTag } from "@/components/PageBlocks";
 import { Mdx } from "@/components/Mdx";
 import { Text } from "@/components/Text";
 import { caseImage, getFeaturedWork } from "@/lib/content";
@@ -96,6 +97,18 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
       <div className={`wrap ${styles.caseBody}`}>
         <Mdx source={c.body} />
+
+        {c.whyItMattered?.text && (
+          <>
+            <h2>Why it mattered</h2>
+            <div className={styles.why}>
+              <DraftTag show={!!c.whyItMattered.draft} />
+              <p>
+                <Text>{c.whyItMattered.text}</Text>
+              </p>
+            </div>
+          </>
+        )}
 
         {c.press && c.press.length > 0 && (
           <>
