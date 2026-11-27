@@ -17,6 +17,25 @@
   letter-spacing: -0.015em;
 }
 
+.intro {
+  margin-top: clamp(1.5rem, 1rem + 2vw, 3rem);
+  max-width: 34em;
+  font-size: var(--fs-lead);
+  line-height: 1.55;
+}
+.intro :global(.ph) {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  font-size: var(--fs-label);
+}
+
+.rowStatement {
+  margin-top: 1.25rem;
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  max-width: 32em;
+}
+
 .series {
   border-top: 1px solid var(--ink);
 }
@@ -27,7 +46,7 @@
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--col-gap);
   row-gap: 1.5rem;
-  align-items: end;
+  align-items: start;
   padding-block: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
   border-bottom: 1px solid var(--rule);
 }

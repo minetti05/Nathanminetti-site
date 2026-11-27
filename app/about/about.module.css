@@ -1,0 +1,122 @@
+.head {
+  padding-top: clamp(3.5rem, 1.5rem + 6vw, 8rem);
+  padding-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+}
+
+.title {
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.015em;
+  max-width: 13em;
+}
+
+/* ---------- Portrait + biography ---------- */
+
+.bio {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: 2.5rem;
+  align-items: start;
+  padding-top: clamp(2rem, 1rem + 3vw, 4rem);
+  border-top: 1px solid var(--ink);
+}
+
+.portrait {
+  grid-column: 1 / span 5;
+}
+
+/* Original proportions, never cropped */
+.portraitImg {
+  width: 100%;
+  height: auto;
+}
+
+.bioText {
+  grid-column: 7 / span 6;
+}
+
+.bioLead {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 1.15rem + 1.2vw, 2.125rem);
+  line-height: 1.3;
+}
+
+.bioPara {
+  margin-top: 1.25rem;
+  font-size: var(--fs-lead);
+  line-height: 1.55;
+  max-width: 34em;
+}
+
+/* ---------- Experience ---------- */
+
+.role {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: 0.5rem;
+  align-items: baseline;
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.role:first-child {
+  padding-top: 0;
+}
+
+.years {
+  grid-column: 1 / span 2;
+  font-size: var(--fs-small);
+  font-variant-numeric: tabular-nums;
+}
+
+.roleMain {
+  grid-column: 3 / span 5;
+}
+
+.company {
+  font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem);
+  line-height: 1.15;
+}
+
+.roleTitle {
+  margin-top: 0.25rem;
+  font-size: var(--fs-small);
+}
+
+.clients {
+  grid-column: 8 / span 5;
+  font-size: var(--fs-small);
+}
+.clients > span {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.earlierText {
+  grid-column: 3 / -1;
+  font-size: var(--fs-small);
+  color: var(--olive-text);
+}
+
+@media (max-width: 62rem) {
+  .portrait {
+    grid-column: 1 / span 6;
+  }
+  .bioText {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 48rem) {
+  .portrait {
+    grid-column: 1 / -1;
+  }
+  .years,
+  .roleMain,
+  .clients,
+  .earlierText {
+    grid-column: 1 / -1;
+  }
+}

@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { DraftTag } from "@/components/PageBlocks";
 import { Photo } from "@/components/Photo";
-import { getPhotoProjects } from "@/lib/content";
+import { Text } from "@/components/Text";
+import { getPage, getPhotoProjects } from "@/lib/content";
 import { siteConfig } from "@/site.config";
 import styles from "./photography.module.css";
 
-export const metadata: Metadata = {
-  title: "Photography",
-  description: "Instant film photography by Nathan Minetti, in four series.",
-};
+type PhotoPage = { title: string; description: string; intro?: string; introDraft?: boolean };
+const page = getPage<PhotoPage>("photography");
+
+export const metadata: Metadata = { title: page.title, description: page.description };
 
 export default function PhotographyIndex() {
   if (!siteConfig.photography.enabled) notFound();
@@ -18,7 +20,15 @@ export default function PhotographyIndex() {
   return (
     <>
       <header className={`wrap ${styles.head}`}>
-        <h1 className={styles.title}>Photography</h1>
+        <h1 className={styles.title}>{page.title}</h1>
+        {page.intro && (
+          <div className={styles.intro}>
+            <DraftTag show={!!page.introDraft} />
+            <p>
+              <Text>{page.intro}</Text>
+            </p>
+          </div>
+        )}
       </header>
 
       <ol className={`wrap ${styles.series}`}>
@@ -31,14 +41,19 @@ export default function PhotographyIndex() {
                 </Link>
               </h2>
               <p className={styles.count}>{p.images.length} photographs</p>
+              {p.body && (
+                <p className={styles.rowStatement}>
+                  <Text>{p.body}</Text>
+                </p>
+              )}
             </div>
-            {/* A contact strip: the first frames at one height, each at its own width. Nothing is cropped. */}
-            <div className={styles.strip} aria-hidden="true">
+            {/* A contact strip: the first three frames, each whole at its own proportions. */}
+            <div className={styles.strip}>
               {p.images.slice(0, 3).map((img) => (
                 <Photo
                   key={img.file}
                   src={img.src!}
-                  alt=""
+                  alt={img.alt}
                   width={img.width!}
                   height={img.height!}
                   sizes="(min-width: 62rem) 20vw, 30vw"
