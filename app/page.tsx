@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import { Photo } from "@/components/Photo";
 import { CaseMedia } from "@/components/CaseMedia";
 import { Text } from "@/components/Text";
 import { caseImage, getFeaturedWork, getPage, getPhotoProjects, type CaseStudy } from "@/lib/content";
@@ -204,10 +204,10 @@ export default function HomePage() {
             </Link>
           </header>
           <div className={styles.photo}>
-            <Link href={`/photography/${leadProject.slug}`} className={styles.photoLead}>
+            <div className={styles.photoLead}>
               {leadImage?.src && leadImage.width && leadImage.height && (
                 // Shown at its original aspect ratio: never cropped.
-                <Image
+                <Photo
                   src={leadImage.src}
                   alt={leadImage.alt}
                   width={leadImage.width}
@@ -216,8 +216,12 @@ export default function HomePage() {
                   className={styles.photoImg}
                 />
               )}
-              <h3 className={styles.photoTitle}>{leadProject.title}</h3>
-            </Link>
+              <h3 className={styles.photoTitle}>
+                <Link href={`/photography/${leadProject.slug}`} className="stretched">
+                  {leadProject.title}
+                </Link>
+              </h3>
+            </div>
             <ol className={styles.photoIndex}>
               {otherProjects.map((p) => (
                 <li key={p.slug}>

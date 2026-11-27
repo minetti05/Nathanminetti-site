@@ -1,0 +1,138 @@
+/* ---------- Point of view ---------- */
+
+.pov {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: 2.5rem;
+  align-items: start;
+}
+
+.povText {
+  grid-column: 1 / span 8;
+  font-family: var(--font-serif);
+  font-size: clamp(1.625rem, 1.2rem + 1.4vw, 2.5rem);
+  line-height: 1.25;
+  font-weight: 400;
+}
+
+.bring {
+  grid-column: 10 / span 3;
+  padding-top: 0.6rem;
+}
+
+.bringList li {
+  padding-block: 0.6rem;
+  border-top: 1px solid var(--rule);
+  font-size: var(--fs-small);
+}
+
+/* ---------- Challenges ---------- */
+
+.challenge {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: 1.5rem;
+  padding-block: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+  border-bottom: 1px solid var(--rule);
+}
+.challenge:first-child {
+  padding-top: 0;
+}
+
+.challengeHead {
+  grid-column: 1 / span 5;
+}
+
+.num {
+  display: block;
+  font-size: var(--fs-label);
+  font-weight: 500;
+  color: var(--olive-text);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 1rem;
+}
+
+.challengeTitle {
+  font-size: var(--fs-h2);
+  font-weight: 300;
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+  max-width: 12em;
+}
+
+.challengeBody {
+  grid-column: 7 / span 6;
+}
+
+.facts {
+  margin: 0;
+  display: grid;
+  gap: 1.5rem;
+}
+.facts dd {
+  margin: 0;
+}
+.facts > div:first-child dd {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+}
+
+.proof {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+
+/* ---------- Engagement types ---------- */
+
+.engagements {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: 2.5rem;
+}
+
+.engagement {
+  padding-top: 1rem;
+  border-top: 1px solid var(--ink);
+}
+
+.engagementName {
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+}
+
+.engagementWhat {
+  margin-top: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.engagementFor {
+  font-size: var(--fs-small);
+}
+
+/* ---------- Who I work with ---------- */
+
+.whoText {
+  margin-top: 0.25rem;
+  font-family: var(--font-serif);
+  font-size: var(--fs-h3);
+  line-height: 1.3;
+  max-width: 30em;
+}
+
+/* ---------- Narrow screens ---------- */
+
+@media (max-width: 62rem) {
+  .povText,
+  .bring,
+  .challengeHead,
+  .challengeBody {
+    grid-column: 1 / -1;
+  }
+  .engagements {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

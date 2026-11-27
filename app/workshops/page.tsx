@@ -1,31 +1,31 @@
 import type { Metadata } from "next";
-import { ClosingCta, DraftTag, PageIntro, Steps, pageStyles as s, type Step } from "@/components/PageBlocks";
+import { ClosingCta, PageIntro, Steps, pageStyles as s, type Step } from "@/components/PageBlocks";
 import { Text } from "@/components/Text";
 import { getPage } from "@/lib/content";
 import w from "./workshops.module.css";
 
 type Workshop = {
   title: string;
-  summary: string;
-  format: string;
-  draft?: boolean;
-  problem?: string;
-  attend?: string;
-  session?: string;
-  outputs: string[];
+  lines: string[];
+  problem: string;
+  attend: string;
+  method: string;
+  deliverables: string[];
+  outcome: string;
 };
 
 type Workshops = {
   title: string;
   description: string;
+  eyebrow: string;
   headline: string;
-  subheadline: string;
   intro: string;
-  labels: { format: string; problem: string; attend: string; session: string; outputs: string };
+  howHeading: string;
+  how: { label: string; value: string }[];
+  labels: { problem: string; attend: string; method: string; deliverables: string; outcome: string };
   workshops: Workshop[];
-  processHeading: string;
+  methodHeading: string;
   steps: Step[];
-  stepsDraft?: boolean;
   cta: { label: string; href: string };
 };
 
@@ -34,48 +34,47 @@ const L = page.labels;
 
 export const metadata: Metadata = { title: page.title, description: page.description };
 
-function Details({ ws }: { ws: Workshop }) {
-  const rows = [
-    [L.problem, ws.problem],
-    [L.attend, ws.attend],
-    [L.session, ws.session],
-  ].filter(([, v]) => v) as [string, string][];
-  if (rows.length === 0) return null;
+/** Problem, audience, methodology, deliverables and outcome: the same template for every workshop. */
+function WorkshopBody({ ws }: { ws: Workshop }) {
   return (
-    <dl className={w.details}>
-      {rows.map(([label, value]) => (
-        <div key={label}>
-          <dt className={s.label}>{label}</dt>
+    <div className={w.body}>
+      <dl className={w.details}>
+        <div>
+          <dt className={s.label}>{L.problem}</dt>
           <dd>
-            <Text>{value}</Text>
+            <Text>{ws.problem}</Text>
           </dd>
         </div>
-      ))}
-    </dl>
-  );
-}
-
-function Outputs({ ws }: { ws: Workshop }) {
-  return (
-    <div className={w.outputsBlock}>
-      <h3 className={s.label}>{L.outputs}</h3>
-      <ol className={w.outputs}>
-        {ws.outputs.map((o) => (
-          <li key={o}>
-            <Text>{o}</Text>
-          </li>
-        ))}
-      </ol>
+        <div>
+          <dt className={s.label}>{L.attend}</dt>
+          <dd>
+            <Text>{ws.attend}</Text>
+          </dd>
+        </div>
+        <div>
+          <dt className={s.label}>{L.method}</dt>
+          <dd>
+            <Text>{ws.method}</Text>
+          </dd>
+        </div>
+      </dl>
+      <div className={w.deliverables}>
+        <h4 className={s.label}>{L.deliverables}</h4>
+        <ol className={w.outputs}>
+          {ws.deliverables.map((o) => (
+            <li key={o}>
+              <Text>{o}</Text>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div className={w.outcome}>
+        <h4 className={s.label}>{L.outcome}</h4>
+        <p className={w.outcomeText}>
+          <Text>{ws.outcome}</Text>
+        </p>
+      </div>
     </div>
-  );
-}
-
-function Meta({ ws }: { ws: Workshop }) {
-  return (
-    <p className={w.format}>
-      <span className={s.label}>{L.format}</span> <Text>{ws.format}</Text>
-      <DraftTag show={!!ws.draft} />
-    </p>
   );
 }
 
@@ -84,52 +83,73 @@ export default function WorkshopsPage() {
 
   return (
     <>
-      <PageIntro title={page.headline} sub={page.subheadline} lead={page.intro} />
+      <PageIntro eyebrow={page.eyebrow} title={page.headline} lead={page.intro} />
+
+      {/* How the workshops work */}
+      <section className={`wrap ${s.section}`} aria-labelledby="how-heading">
+        <header className={s.sectionHead}>
+          <h2 id="how-heading" className={s.sectionTitle}>
+            {page.howHeading}
+          </h2>
+        </header>
+        <dl className={w.how}>
+          {page.how.map((h) => (
+            <div key={h.label}>
+              <dt className={s.label}>{h.label}</dt>
+              <dd>
+                <Text>{h.value}</Text>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
 
       <section className={`wrap ${s.section}`} aria-label="Workshops">
         {/* Flagship: first and largest */}
         {flagship && (
           <article className={w.flagship}>
-            <div className={w.flagshipMain}>
-              <Meta ws={flagship} />
-              <h2 className={w.flagshipTitle}>
+            <header className={w.flagshipHead}>
+              <h3 className={w.flagshipTitle}>
                 <Text>{flagship.title}</Text>
-              </h2>
-              <p className={w.flagshipSummary}>
-                <Text>{flagship.summary}</Text>
-              </p>
-              <Details ws={flagship} />
-            </div>
-            <div className={w.flagshipAside}>
-              <Outputs ws={flagship} />
-            </div>
+              </h3>
+              <ul className={w.lines}>
+                {flagship.lines.map((l) => (
+                  <li key={l}>
+                    <Text>{l}</Text>
+                  </li>
+                ))}
+              </ul>
+            </header>
+            <WorkshopBody ws={flagship} />
           </article>
         )}
 
-        <div className={w.pair}>
-          {others.map((ws) => (
-            <article key={ws.title} className={w.workshop}>
-              <Meta ws={ws} />
-              <h2 className={w.workshopTitle}>
+        {others.map((ws) => (
+          <article key={ws.title} className={w.workshop}>
+            <header className={w.workshopHead}>
+              <h3 className={w.workshopTitle}>
                 <Text>{ws.title}</Text>
-              </h2>
-              <p className={w.workshopSummary}>
-                <Text>{ws.summary}</Text>
-              </p>
-              <Details ws={ws} />
-              <Outputs ws={ws} />
-            </article>
-          ))}
-        </div>
+              </h3>
+              <ul className={w.lines}>
+                {ws.lines.map((l) => (
+                  <li key={l}>
+                    <Text>{l}</Text>
+                  </li>
+                ))}
+              </ul>
+            </header>
+            <WorkshopBody ws={ws} />
+          </article>
+        ))}
       </section>
 
-      <section className={`wrap ${s.section}`} aria-labelledby="process-heading">
+      <section className={`wrap ${s.section}`} aria-labelledby="method-heading">
         <header className={s.sectionHead}>
-          <h2 id="process-heading" className={s.sectionTitle}>
-            {page.processHeading}
+          <h2 id="method-heading" className={s.sectionTitle}>
+            {page.methodHeading}
           </h2>
         </header>
-        <Steps steps={page.steps} draft={page.stepsDraft} />
+        <Steps steps={page.steps} />
       </section>
 
       <ClosingCta label={page.cta.label} href={page.cta.href} />

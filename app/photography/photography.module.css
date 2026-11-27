@@ -1,0 +1,194 @@
+/*
+ * Photography: an art book. Large images, restrained type, lots of air.
+ * Every photograph keeps its own proportions: width and height are always auto.
+ */
+
+/* ---------- Index ---------- */
+
+.head {
+  padding-top: clamp(3.5rem, 1.5rem + 6vw, 8rem);
+  padding-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+}
+
+.title {
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.015em;
+}
+
+.series {
+  border-top: 1px solid var(--ink);
+}
+
+.seriesItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: 1.5rem;
+  align-items: end;
+  padding-block: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+  border-bottom: 1px solid var(--rule);
+}
+
+.seriesText {
+  grid-column: 1 / span 4;
+  align-self: start;
+}
+
+.seriesTitle {
+  font-size: var(--fs-h2);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  transition: color var(--t-fast) var(--ease);
+}
+.seriesItem:hover .seriesTitle {
+  color: var(--navy);
+  font-style: italic;
+}
+
+.count {
+  margin-top: 0.75rem;
+  font-size: var(--fs-small);
+  color: var(--olive-text);
+}
+
+/* Contact strip: the first three frames, each whole at its own proportions. Nothing is clipped. */
+.strip {
+  grid-column: 5 / span 8;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.5rem, 0.25rem + 0.8vw, 1rem);
+  align-items: end;
+}
+.stripImg {
+  width: 100%;
+  height: auto;
+  transition: transform var(--t-slow) var(--ease);
+}
+.seriesItem:hover .stripImg {
+  transform: translateY(-4px);
+}
+
+/* ---------- Gallery ---------- */
+
+.galleryHead {
+  padding-top: clamp(3rem, 1.5rem + 5vw, 7rem);
+  padding-bottom: clamp(2rem, 1rem + 3vw, 4rem);
+}
+
+.kicker {
+  font-size: var(--fs-small);
+  margin-bottom: clamp(1.5rem, 1rem + 2vw, 3rem);
+}
+.kickerLink {
+  color: var(--olive-text);
+}
+.kickerLink:hover {
+  color: var(--navy);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.galleryTitle {
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.015em;
+}
+
+.statement {
+  margin-top: 2rem;
+  max-width: 36em;
+  font-size: var(--fs-lead);
+}
+
+.plates {
+  display: grid;
+  gap: clamp(4rem, 2rem + 8vw, 10rem);
+  padding-top: clamp(2rem, 1rem + 3vw, 4rem);
+  border-top: 1px solid var(--ink);
+}
+
+.plate {
+  display: flex;
+  justify-content: center;
+}
+
+.figure {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+}
+
+/* Shown whole: bounded by the screen's width and height, never cropped or stretched */
+.plateImg {
+  width: auto;
+  height: auto;
+  max-width: min(100%, 64rem);
+  max-height: 86vh;
+  max-height: 86svh;
+}
+
+.plateNum {
+  font-size: var(--fs-label);
+  color: var(--olive-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.next {
+  margin-top: var(--section);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  align-items: end;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ink);
+}
+.nextLink {
+  grid-column: 1 / span 9;
+  display: grid;
+  gap: 0.5rem;
+}
+.nextLabel {
+  font-size: var(--fs-label);
+  font-weight: 500;
+  color: var(--olive-text);
+}
+.nextTitle {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: var(--fs-h1);
+  line-height: 1.05;
+  transition: color var(--t-fast) var(--ease);
+}
+.nextLink:hover .nextTitle {
+  color: var(--navy);
+  font-style: italic;
+}
+.allLink {
+  grid-column: 10 / span 3;
+  justify-self: end;
+  font-size: var(--fs-small);
+}
+
+@media (max-width: 62rem) {
+  .seriesText,
+  .strip {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 48rem) {
+  .nextLink,
+  .allLink {
+    grid-column: 1 / -1;
+  }
+  .allLink {
+    justify-self: start;
+    margin-top: 1.5rem;
+  }
+}

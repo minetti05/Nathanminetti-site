@@ -14,11 +14,13 @@ export function DraftTag({ show = true }: { show?: boolean }) {
 }
 
 export function PageIntro({
+  eyebrow,
   title,
   sub,
   lead,
   leadDraft = false,
 }: {
+  eyebrow?: string;
   title: string;
   sub?: string;
   lead?: string;
@@ -26,6 +28,7 @@ export function PageIntro({
 }) {
   return (
     <header className={`wrap ${styles.intro}`}>
+      {eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}
       <h1 className={styles.title}>
         <Text>{title}</Text>
       </h1>
@@ -80,14 +83,25 @@ export function Steps({ steps, note, draft = false }: { steps: Step[]; note?: st
   );
 }
 
-/** Small linked case studies, by file name in /content/work. */
-export async function ProofList({ slugs }: { slugs: string[] }) {
+/** Small linked case studies, by file name in /content/work, each with an optional one-line caption. */
+export async function ProofList({
+  slugs,
+  items: given,
+  columns = 1,
+}: {
+  slugs?: string[];
+  items?: { work: string; line?: string }[];
+  columns?: 1 | 2;
+}) {
   const all = getAllWork();
-  const cases = slugs.map((s) => all.find((c) => c.slug === s)).filter((c) => c !== undefined);
-  const items = await Promise.all(cases.map(async (c) => ({ c, img: await caseImage(c) })));
+  const wanted = given ?? (slugs ?? []).map((work) => ({ work, line: undefined }));
+  const found = wanted
+    .map((w) => ({ c: all.find((c) => c.slug === w.work), line: w.line }))
+    .filter((x): x is { c: NonNullable<typeof x.c>; line: string | undefined } => x.c !== undefined);
+  const items = await Promise.all(found.map(async ({ c, line }) => ({ c, line, img: await caseImage(c) })));
   return (
-    <ul className={styles.proof}>
-      {items.map(({ c, img }) => (
+    <ul className={columns === 2 ? `${styles.proof} ${styles.proofTwo}` : styles.proof}>
+      {items.map(({ c, line, img }) => (
         <li key={c.slug} className={styles.proofItem}>
           {/* Image is decorative here: the linked title below names the case. */}
           <CaseMedia src={img?.src ?? null} alt="" fit={img?.fit} client={c.client} />
@@ -99,6 +113,11 @@ export async function ProofList({ slugs }: { slugs: string[] }) {
               <Text>{c.title ?? c.project}</Text>
             </Link>
           </h3>
+          {line && (
+            <p className={styles.proofLine}>
+              <Text>{line}</Text>
+            </p>
+          )}
         </li>
       ))}
     </ul>

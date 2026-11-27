@@ -18,12 +18,12 @@ export const siteConfig = {
   },
 
   /**
-   * Photography: off until the original image files are in /public/images/photography.
+   * Photography: on. Switch off to hide it everywhere.
    * false → removed from the nav, homepage and footer; the pages return 404.
    * true  → appears everywhere. Only projects that have images listed are shown.
    */
   photography: {
-    enabled: false,
+    enabled: true,
   },
 } as const;
 

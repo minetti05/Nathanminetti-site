@@ -90,7 +90,7 @@ An optional one-paragraph artist statement.
 `site.config.ts` holds the site-wide settings:
 
 - `brandsAndCulture.enabled`: `false` hides Brands & Culture from the navigation, homepage and footer, and makes its page return "not found". Change it to `true` to launch it.
-- `photography.enabled`: `false` hides Photography from the navigation, homepage and footer. Turn it on once the gallery pages are built.
+- `photography.enabled`: `true` shows Photography in the navigation, homepage and footer. Set it to `false` to hide it everywhere.
 - Contact email and LinkedIn link.
 
 ---

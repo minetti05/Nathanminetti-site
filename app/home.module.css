@@ -320,7 +320,7 @@
 
 .photoLead {
   grid-column: 1 / span 9;
-  display: block;
+  position: relative;
 }
 
 .photoImg {
