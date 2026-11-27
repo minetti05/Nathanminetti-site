@@ -1,0 +1,214 @@
+/*
+ * Design tokens: the one place the palette, type scale and spacing are defined.
+ * Brief section 4. Every text pairing below passes WCAG AA (contrast noted beside each).
+ */
+:root {
+  /* Palette */
+  --warm-white: #f7f6f2; /* dominant background */
+  --charcoal: #202020; /* dominant text — 15.1:1 on warm white */
+  --light-grey: #eae9e4; /* dividers, subtle panels — charcoal on it 13.4:1 */
+  --olive: #777b62; /* restrained accent: large type (24px+) and rules only — 4.05:1, fails AA for small text */
+  --olive-text: #666a53; /* olive for small text — 5.2:1 on warm white, 4.6:1 on light grey */
+  --navy: #24364a; /* accent and links — 11.4:1 on warm white */
+
+  --bg: var(--warm-white);
+  --ink: var(--charcoal);
+  --rule: #d6d5cf; /* hairline: a touch darker than light grey so it reads on warm white */
+  --link: var(--navy);
+  --placeholder-bg: #fff0b3; /* temporary: makes unfilled gaps impossible to miss */
+
+  /* Type */
+  --font-serif: "Cormorant Garamond", "Iowan Old Style", "Times New Roman", serif;
+  --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --fs-display: clamp(2.875rem, 1.2rem + 5.4vw, 6.75rem); /* hero, closing line */
+  --fs-h1: clamp(2.5rem, 1.6rem + 3.6vw, 5rem);
+  --fs-h2: clamp(2rem, 1.5rem + 2vw, 3.25rem);
+  --fs-h3: clamp(1.625rem, 1.3rem + 1.1vw, 2.25rem);
+  --fs-lead: clamp(1.1875rem, 1.05rem + 0.45vw, 1.4375rem);
+  --fs-body: 1.0625rem; /* 17px — brief minimum on desktop */
+  --fs-small: 0.9375rem; /* 15px */
+  --fs-label: 0.8125rem; /* 13px — minimum */
+
+  --lh-tight: 1.02;
+  --lh-heading: 1.12;
+  --lh-body: 1.6;
+
+  /* Space and layout */
+  --gutter: clamp(1.25rem, 0.6rem + 2.8vw, 3.5rem);
+  --max: 90rem; /* 1440px */
+  --section: clamp(5rem, 3rem + 7vw, 10rem); /* vertical rhythm between homepage sections */
+  --col-gap: clamp(1rem, 0.5rem + 1.6vw, 2.5rem);
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --t-fast: 180ms;
+  --t-slow: 600ms;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: var(--lh-heading);
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+::selection {
+  background: var(--navy);
+  color: var(--warm-white);
+}
+
+:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 3px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -100px;
+  z-index: 10;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 0.75rem 1rem;
+  font-size: var(--fs-small);
+}
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+/* Text link with a hairline that thickens on hover */
+.link {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  transition: text-decoration-thickness var(--t-fast) var(--ease);
+}
+.link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Buttons: square, typographic, no icons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--ink);
+  transition:
+    background-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease);
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--bg);
+}
+.btn-primary:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+}
+.btn-secondary:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* Visible placeholder for any [bracketed] gap. Remove the brackets in content to clear it. */
+.ph {
+  background: var(--placeholder-bg);
+  color: var(--charcoal);
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: 0.85em;
+  font-weight: 500;
+  padding: 0.05em 0.35em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
