@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
-import { ClosingCta, PageIntro, ProofList, Steps, pageStyles as s } from "@/components/PageBlocks";
+import {
+  ClosingCta,
+  DraftTag,
+  PageIntro,
+  ProofList,
+  Steps,
+  pageStyles as s,
+  type Step,
+} from "@/components/PageBlocks";
 import { Text } from "@/components/Text";
 import { getPage } from "@/lib/content";
 
@@ -9,11 +17,13 @@ type Advisory = {
   headline: string;
   subheadline: string;
   intro: string;
-  pillars: { title: string; items: string[]; work?: string[] }[];
+  introDraft?: boolean;
+  pillars: { title: string; draft?: boolean; problem?: string; items: string[]; work?: string[] }[];
   whoHeading: string;
   who: string[];
   approachHeading: string;
-  steps: string[];
+  steps: Step[];
+  stepsDraft?: boolean;
   approachNote: string;
   cta: { label: string; href: string };
 };
@@ -25,22 +35,32 @@ export const metadata: Metadata = { title: page.title, description: page.descrip
 export default function AdvisoryPage() {
   return (
     <>
-      <PageIntro title={page.headline} sub={page.subheadline} lead={page.intro} />
+      <PageIntro title={page.headline} sub={page.subheadline} lead={page.intro} leadDraft={page.introDraft} />
 
       <section className={`wrap ${s.section}`} aria-label="Areas of advisory">
         <ul className={s.rows}>
           {page.pillars.map((p) => (
             <li key={p.title} className={s.row}>
-              <h2 className={s.rowTitle}>
-                <Text>{p.title}</Text>
-              </h2>
-              <ul className={s.rowList}>
-                {p.items.map((item) => (
-                  <li key={item}>
-                    <Text>{item}</Text>
-                  </li>
-                ))}
-              </ul>
+              <div className={s.rowTitle}>
+                <h2>
+                  <Text>{p.title}</Text>
+                </h2>
+                <DraftTag show={!!p.draft} />
+              </div>
+              <div className={s.rowMain}>
+                {p.problem && (
+                  <p className={s.problem}>
+                    <Text>{p.problem}</Text>
+                  </p>
+                )}
+                <ul className={s.rowList}>
+                  {p.items.map((item) => (
+                    <li key={item}>
+                      <Text>{item}</Text>
+                    </li>
+                  ))}
+                </ul>
+              </div>
               {p.work && p.work.length > 0 && (
                 <div className={s.rowAside}>
                   <p className={s.label}>Related work</p>
@@ -73,7 +93,7 @@ export default function AdvisoryPage() {
             {page.approachHeading}
           </h2>
         </header>
-        <Steps steps={page.steps} note={page.approachNote} />
+        <Steps steps={page.steps} note={page.approachNote} draft={page.stepsDraft} />
       </section>
 
       <ClosingCta label={page.cta.label} href={page.cta.href} />

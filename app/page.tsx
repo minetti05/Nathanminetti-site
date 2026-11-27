@@ -40,39 +40,34 @@ export const metadata: Metadata = {
 async function WorkEntry({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
   const img = await caseImage(c);
   return (
-    <article className={lead ? styles.workLead : styles.workItem}>
-      <Link href={`/work/${c.slug}`} className={styles.workLink}>
-        <div className={styles.workMedia}>
-          <CaseMedia
-            src={img?.src ?? null}
-            alt={img?.alt ?? ""}
-            fit={img?.fit}
-            client={c.client}
-            priority={lead}
-          />
-        </div>
-        <div className={styles.workText}>
-          <p className={styles.workClient}>
-            <Text>{c.client}</Text>
-            <span aria-hidden="true"> · </span>
-            <Text>{c.project}</Text>
-          </p>
-          <h3 className={styles.workTitle}>
+    <article className={`${lead ? styles.workLead : styles.workItem} ${styles.workCard}`}>
+      <div className={styles.workMedia}>
+        {/* Decorative here: the linked title names the case. */}
+        <CaseMedia src={img?.src ?? null} alt="" fit={img?.fit} client={c.client} priority={lead} />
+      </div>
+      <div className={styles.workText}>
+        <p className={styles.workClient}>
+          <Text>{c.client}</Text>
+          <span aria-hidden="true"> · </span>
+          <Text>{c.project}</Text>
+        </p>
+        <h3 className={styles.workTitle}>
+          <Link href={`/work/${c.slug}`} className="stretched">
             <Text>{c.title}</Text>
-          </h3>
-          <p className={styles.workDek}>
-            <Text>{c.dek}</Text>
-          </p>
-          <p className={styles.workMeta}>
-            <Text>{c.year}</Text>
-            <span aria-hidden="true"> · </span>
-            <Text>{c.agency}</Text>
-          </p>
-          <p className={styles.workRole}>
-            <Text>{c.role}</Text>
-          </p>
-        </div>
-      </Link>
+          </Link>
+        </h3>
+        <p className={styles.workDek}>
+          <Text>{c.dek}</Text>
+        </p>
+        <p className={styles.workMeta}>
+          <Text>{c.year}</Text>
+          <span aria-hidden="true"> · </span>
+          <Text>{c.agency}</Text>
+        </p>
+        <p className={styles.workRole}>
+          <Text>{c.role}</Text>
+        </p>
+      </div>
     </article>
   );
 }
@@ -133,9 +128,11 @@ export default function HomePage() {
         <ul className={styles.services}>
           {services.map((s) => (
             <li key={s.href}>
-              <Link href={s.href} className={styles.service}>
+              <div className={styles.service}>
                 <h3 className={styles.serviceTitle}>
-                  <Text>{s.title}</Text>
+                  <Link href={s.href} className="stretched">
+                    <Text>{s.title}</Text>
+                  </Link>
                 </h3>
                 <div className={styles.serviceText}>
                   <p className={styles.serviceLine}>
@@ -146,9 +143,11 @@ export default function HomePage() {
                       <Text>{s.body}</Text>
                     </p>
                   )}
-                  <span className={styles.serviceLink}>{s.linkLabel}</span>
+                  <span className={styles.serviceLink} aria-hidden="true">
+                    {s.linkLabel}
+                  </span>
                 </div>
-              </Link>
+              </div>
             </li>
           ))}
         </ul>
@@ -180,14 +179,12 @@ export default function HomePage() {
           </h2>
           <ul className={styles.awards}>
             {recognition.items.map((a) => (
-              <li key={a.award + a.project}>
-                <Link href={a.href} className={styles.award}>
-                  <span className={styles.awardName}>
-                    <Text>{a.award}</Text>
-                  </span>
-                  <span className={styles.awardProject}>
-                    <Text>{a.project}</Text>
-                  </span>
+              <li key={a.award + a.project} className={styles.award}>
+                <span className={styles.awardName}>
+                  <Text>{a.award}</Text>
+                </span>
+                <Link href={a.href} className={`stretched ${styles.awardProject}`}>
+                  <Text>{a.project}</Text>
                 </Link>
               </li>
             ))}

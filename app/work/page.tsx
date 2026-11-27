@@ -23,38 +23,33 @@ const watchUrl = (c: CaseStudy, id?: string) => {
 async function Entry({ c, priority }: { c: CaseStudy; priority: boolean }) {
   const img = await caseImage(c);
   return (
-    <li>
-      <Link href={`/work/${c.slug}`} className={`${styles.entry} ${styles.entryLink}`}>
-        <p className={styles.entryYear}>{c.year}</p>
-        <div className={styles.entryMedia}>
-          <CaseMedia
-            src={img?.src ?? null}
-            alt={img?.alt ?? ""}
-            fit={img?.fit}
-            client={c.client}
-            priority={priority}
-          />
-        </div>
-        <div className={styles.entryText}>
-          <p className={styles.entryClient}>
-            <Text>{c.client}</Text>
-            <span aria-hidden="true"> · </span>
-            <Text>{c.project}</Text>
-          </p>
-          <h2 className={styles.entryTitle}>
+    <li className={`${styles.entry} ${styles.entryLink}`}>
+      <p className={styles.entryYear}>{c.year}</p>
+      <div className={styles.entryMedia}>
+        {/* Decorative here: the linked title names the case. */}
+        <CaseMedia src={img?.src ?? null} alt="" fit={img?.fit} client={c.client} priority={priority} />
+      </div>
+      <div className={styles.entryText}>
+        <p className={styles.entryClient}>
+          <Text>{c.client}</Text>
+          <span aria-hidden="true"> · </span>
+          <Text>{c.project}</Text>
+        </p>
+        <h2 className={styles.entryTitle}>
+          <Link href={`/work/${c.slug}`} className="stretched">
             <Text>{c.title}</Text>
-          </h2>
-          <p className={styles.entryDek}>
-            <Text>{c.dek}</Text>
-          </p>
-          <p className={styles.entryMeta}>
-            <Text>{c.agency}</Text>
-          </p>
-          <p className={styles.entryRole}>
-            <Text>{c.role}</Text>
-          </p>
-        </div>
-      </Link>
+          </Link>
+        </h2>
+        <p className={styles.entryDek}>
+          <Text>{c.dek}</Text>
+        </p>
+        <p className={styles.entryMeta}>
+          <Text>{c.agency}</Text>
+        </p>
+        <p className={styles.entryRole}>
+          <Text>{c.role}</Text>
+        </p>
+      </div>
     </li>
   );
 }

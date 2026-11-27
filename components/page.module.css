@@ -80,7 +80,6 @@
 }
 
 .rowList {
-  grid-column: 5 / span 4;
   display: grid;
   align-content: start;
 }
@@ -99,33 +98,69 @@
   grid-column: 10 / span 3;
 }
 
+.rowMain {
+  grid-column: 5 / span 5;
+}
+.rowMain .rowList {
+  margin-top: 1.5rem;
+  max-width: 26rem;
+}
+.problem {
+  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  line-height: 1.55;
+  max-width: 34em;
+}
+
+.draftTag {
+  display: inline-block;
+  font-size: var(--fs-label);
+  margin-bottom: 0.75rem;
+}
+.draftLine {
+  margin-bottom: 0.5rem;
+}
+.rowTitle h2 {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+.rowTitle .draftTag {
+  display: block;
+  width: fit-content;
+  margin-top: 1rem;
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+}
+
 .label {
+  font-family: var(--font-sans);
   font-size: var(--fs-label);
   font-weight: 500;
   color: var(--olive-text);
   margin-bottom: 0.75rem;
 }
 
-/* Small linked case studies */
+/* Small linked case studies. The title is the link; it stretches over the whole item. */
 .proof {
   display: grid;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
-.proofLink {
-  display: grid;
-  gap: 0.6rem;
+.proofItem {
+  position: relative;
 }
-.proofLink:hover .proofTitle {
+.proofItem:hover .proofTitle {
   color: var(--navy);
 }
-.proofLink:hover img {
+.proofItem:hover img {
   transform: scale(1.015);
 }
 .proofClient {
+  margin-top: 0.6rem;
   font-size: var(--fs-label);
   color: var(--olive-text);
 }
 .proofTitle {
+  margin-top: 0.2rem;
   font-family: var(--font-serif);
   font-size: 1.375rem;
   line-height: 1.15;
@@ -183,6 +218,11 @@
   line-height: 1.05;
 }
 
+.stepText {
+  margin-top: 0.9rem;
+  max-width: 24em;
+}
+
 .note {
   margin-top: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
   font-size: var(--fs-lead);
@@ -226,7 +266,7 @@
   .rowTitle {
     grid-column: 1 / -1;
   }
-  .rowList {
+  .rowMain {
     grid-column: 1 / span 7;
   }
   .rowAside {
@@ -237,7 +277,7 @@
 @media (max-width: 48rem) {
   .sub,
   .lead,
-  .rowList,
+  .rowMain,
   .rowAside {
     grid-column: 1 / -1;
   }

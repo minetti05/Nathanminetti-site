@@ -7,7 +7,23 @@ import styles from "./page.module.css";
 
 export { styles as pageStyles };
 
-export function PageIntro({ title, sub, lead }: { title: string; sub?: string; lead?: string }) {
+/** Small tag marking copy that still needs Nathan's approval (draft: true in content). */
+export function DraftTag({ show = true }: { show?: boolean }) {
+  if (!show) return null;
+  return <span className={`ph ${styles.draftTag}`}>Draft for approval</span>;
+}
+
+export function PageIntro({
+  title,
+  sub,
+  lead,
+  leadDraft = false,
+}: {
+  title: string;
+  sub?: string;
+  lead?: string;
+  leadDraft?: boolean;
+}) {
   return (
     <header className={`wrap ${styles.intro}`}>
       <h1 className={styles.title}>
@@ -19,23 +35,39 @@ export function PageIntro({ title, sub, lead }: { title: string; sub?: string; l
         </p>
       )}
       {lead && (
-        <p className={styles.lead}>
-          <Text>{lead}</Text>
-        </p>
+        <div className={styles.lead}>
+          <DraftTag show={leadDraft} />
+          <p>
+            <Text>{lead}</Text>
+          </p>
+        </div>
       )}
     </header>
   );
 }
 
-export function Steps({ steps, note }: { steps: string[]; note?: string }) {
+export type Step = string | { name: string; text?: string };
+
+export function Steps({ steps, note, draft = false }: { steps: Step[]; note?: string; draft?: boolean }) {
+  const list = steps.map((s) => (typeof s === "string" ? { name: s, text: "" } : s));
   return (
     <>
-      <ol className={styles.steps} style={{ "--n": steps.length } as CSSProperties}>
-        {steps.map((s) => (
-          <li key={s} className={styles.step}>
-            <span className={styles.stepName}>
-              <Text>{s}</Text>
-            </span>
+      {draft && (
+        <p className={styles.draftLine}>
+          <DraftTag />
+        </p>
+      )}
+      <ol className={styles.steps} style={{ "--n": list.length } as CSSProperties}>
+        {list.map((s) => (
+          <li key={s.name} className={styles.step}>
+            <h3 className={styles.stepName}>
+              <Text>{s.name}</Text>
+            </h3>
+            {s.text && (
+              <p className={styles.stepText}>
+                <Text>{s.text}</Text>
+              </p>
+            )}
           </li>
         ))}
       </ol>
@@ -56,16 +88,17 @@ export async function ProofList({ slugs }: { slugs: string[] }) {
   return (
     <ul className={styles.proof}>
       {items.map(({ c, img }) => (
-        <li key={c.slug}>
-          <Link href={c.featured ? `/work/${c.slug}` : `/work#${c.slug}`} className={styles.proofLink}>
-            <CaseMedia src={img?.src ?? null} alt={img?.alt ?? ""} fit={img?.fit} client={c.client} />
-            <span className={styles.proofClient}>
-              <Text>{c.client}</Text>
-            </span>
-            <span className={styles.proofTitle}>
+        <li key={c.slug} className={styles.proofItem}>
+          {/* Image is decorative here: the linked title below names the case. */}
+          <CaseMedia src={img?.src ?? null} alt="" fit={img?.fit} client={c.client} />
+          <p className={styles.proofClient}>
+            <Text>{c.client}</Text>
+          </p>
+          <h3 className={styles.proofTitle}>
+            <Link href={c.featured ? `/work/${c.slug}` : `/work#${c.slug}`} className="stretched">
               <Text>{c.title ?? c.project}</Text>
-            </span>
-          </Link>
+            </Link>
+          </h3>
         </li>
       ))}
     </ul>

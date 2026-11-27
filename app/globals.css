@@ -145,6 +145,14 @@ ol {
   top: 0.75rem;
 }
 
+/* Stretched link: the link covers its whole card, but its accessible name stays just its own text. */
+.stretched::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
 /* Text link with a hairline that thickens on hover */
 .link {
   color: var(--link);

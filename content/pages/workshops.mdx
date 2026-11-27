@@ -1,35 +1,54 @@
 ---
-# Workshops page copy. Brief section 3.
+# Workshops page copy. Brief section 3, expanded in review.
+# draft: true on any block shows a "Draft for approval" tag beside it. Set to false once approved.
 title: "Executive Workshops"
 description: "Half-day and full-day executive workshops that help teams find growth opportunities, build partnerships and connect their business to culture."
 headline: "Executive Workshops"
 subheadline: "Turning strategic thinking into new opportunities."
 intro: "Focused, collaborative workshops that help teams identify growth opportunities, develop meaningful partnerships and connect their businesses to culture."
 
-format:
-  label: "Format"
-  value: "Half-day or full-day"
+labels:
+  format: "Format"
+  problem: "The problem"
+  attend: "Who should attend"
+  session: "In the session"
+  outputs: "Outputs"
 
 # The first workshop is the flagship, shown first and largest.
 workshops:
   - title: "The Partnership Opportunity Lab"
     summary: "Identify where your business can create value through strategic partnerships."
+    format: "Half-day or full-day"
+    draft: true
+    problem: "You know partnerships could open new audiences or revenue, but not which partners, on what terms, or where to start."
+    attend: "Brand, marketing, partnerships and business development leads, with a senior decision-maker in the room."
+    session: "We map your assets and goals, size the opportunities, profile potential partners and shape the first partnership concepts together."
     outputs:
       - "Partnership opportunity assessment"
       - "Potential partner profiles and target list"
       - "Commercial opportunity map"
       - "Initial partnership concepts"
       - "Recommended next steps"
-  - title: "The Cultural Relevance Sprint"
+  - title: "The Culture Connection Sprint"
     summary: "Explore how your brand or business can participate more meaningfully in culture."
+    format: "Half-day or full-day"
+    draft: true
+    problem: "Your brand shows up in culture through campaigns, but not in a way your audience would miss if it stopped."
+    attend: "Brand, marketing, creative and communications leads, plus the agency partners who work with them."
+    session: "We look at your audience and the cultural territories they care about, then find credible ways to take part through partnerships, content and experiences."
     outputs:
       - "Cultural and audience opportunity assessment"
       - "Relevant cultural territories"
       - "Partnership and collaboration opportunities"
       - "Creative and experiential concepts"
       - "Strategic recommendations"
-  - title: "The Global-to-Local Growth Playbook"
+  - title: "The Global-to-Local Opportunity Sprint"
     summary: "Turn global ambitions into actionable local market opportunities."
+    format: "Half-day or full-day"
+    draft: true
+    problem: "A global strategy arrives in market without the local insight, partners or priorities it needs to work."
+    attend: "Global and regional brand leads, local market teams and the agencies that support them."
+    session: "We translate the global ambition into local priorities, audiences and partners, and build a practical 90-day plan."
     outputs:
       - "Local market opportunity assessment"
       - "Priority audiences and stakeholders"
@@ -37,13 +56,17 @@ workshops:
       - "Market-specific activation priorities"
       - "Practical 90-day action plan"
 
-outputsLabel: "Outputs"
 processHeading: "Process"
+stepsDraft: true
 steps:
-  - "Understand"
-  - "Design"
-  - "Deliver"
-  - "Move Forward"
+  - name: "Understand"
+    text: "Before the session, we agree the goals and I review your business, audiences and market."
+  - name: "Design"
+    text: "I build the workshop around your questions, with tailored materials and exercises."
+  - name: "Deliver"
+    text: "A half-day or full-day working session with your team, focused on decisions rather than presentations."
+  - name: "Move Forward"
+    text: "You leave with the agreed outputs and a clear set of next steps."
 
 cta:
   label: "Discuss a Workshop"

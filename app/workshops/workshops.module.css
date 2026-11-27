@@ -3,23 +3,26 @@
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--col-gap);
-  row-gap: 1.5rem;
+  row-gap: 2.5rem;
   background: var(--charcoal);
   color: var(--warm-white);
-  /* Labels on the dark panel: a light warm grey that passes AA (about 10:1). */
+  padding: clamp(2rem, 1rem + 4vw, 5rem) clamp(1.25rem, 0.5rem + 3vw, 4rem);
+  /* Labels and rules on the dark panel: a light warm grey that passes AA (about 10:1). */
   --olive-text: #c9c8c1;
   --rule: #4a4a48;
-  padding: clamp(2rem, 1rem + 4vw, 5rem) clamp(1.25rem, 0.5rem + 3vw, 4rem);
 }
 
-.flagship .format,
-.flagship .flagshipTitle,
-.flagship .flagshipSummary {
-  grid-column: 1 / span 8;
+.flagshipMain {
+  grid-column: 1 / span 7;
 }
 
+.flagshipAside {
+  grid-column: 9 / span 4;
+  align-self: end;
+}
 
 .flagshipTitle {
+  margin-top: 1.25rem;
   font-size: var(--fs-h1);
   font-weight: 300;
   line-height: 1.02;
@@ -27,29 +30,60 @@
 }
 
 .flagshipSummary {
+  margin-top: 1.25rem;
   font-family: var(--font-serif);
   font-style: italic;
   font-size: var(--fs-h3);
   line-height: 1.25;
 }
 
-.flagshipOutputs {
-  grid-column: 9 / span 4;
-  grid-row: 1 / span 3;
-  align-self: end;
+/* The draft tag stays dark-on-yellow inside the dark panel */
+.flagship :global(.ph) {
+  color: var(--charcoal);
 }
 
 .format {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.6rem;
   font-size: var(--fs-small);
 }
-.format > span {
-  margin-right: 0.5rem;
+.format > span:first-child {
+  margin-bottom: 0;
+}
+.format :global(.ph) {
+  margin: 0 0 0 auto;
+}
+
+/* Problem / Who should attend / In the session */
+.details {
+  margin: 2rem 0 0;
+  display: grid;
+  gap: 1.1rem;
+}
+.details > div {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  column-gap: 1.25rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+}
+.details dt {
+  margin: 0.2rem 0 0;
+}
+.details dd {
+  margin: 0;
+}
+
+.outputsBlock {
+  margin-top: 2rem;
+}
+.flagshipAside .outputsBlock {
+  margin-top: 0;
 }
 
 .outputs {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   counter-reset: out;
 }
 .outputs li {
@@ -93,7 +127,6 @@
 
 .workshopSummary {
   margin-top: 1rem;
-  margin-bottom: 2rem;
   font-family: var(--font-serif);
   font-style: italic;
   font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
@@ -102,17 +135,18 @@
 }
 
 @media (max-width: 62rem) {
-  .flagship .format,
-  .flagship .flagshipTitle,
-  .flagship .flagshipSummary,
-  .flagshipOutputs {
+  .flagshipMain,
+  .flagshipAside {
     grid-column: 1 / -1;
-    grid-row: auto;
   }
 }
 
 @media (max-width: 48rem) {
   .pair {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .details > div {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.3rem;
   }
 }

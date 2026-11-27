@@ -106,6 +106,7 @@
 }
 
 .service {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--col-gap);
@@ -164,19 +165,17 @@
 
 /* ---------- Selected Work ---------- */
 
-.workLink {
-  display: block;
-  height: 100%;
+.workCard {
+  position: relative;
 }
-
-.workLink:hover img {
+.workCard:hover img {
   transform: scale(1.015);
 }
-.workLink:hover .workTitle {
+.workCard:hover .workTitle {
   color: var(--navy);
 }
 
-.workLead .workLink {
+.workLead {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--col-gap);
@@ -279,11 +278,12 @@
 }
 
 .award {
+  position: relative;
   display: grid;
+  align-content: start;
   gap: 0.35rem;
   padding-top: 0.75rem;
   border-top: 1px solid #c9c8c1;
-  height: 100%;
 }
 
 .awardName {
