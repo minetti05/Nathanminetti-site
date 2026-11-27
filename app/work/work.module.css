@@ -259,6 +259,23 @@
   margin-top: 1.1rem;
 }
 
+/* Lists in a case write-up (e.g. What I brought): hairline rows, no bullets */
+.caseBody > ul {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  max-width: 36em;
+}
+.caseBody > ul li {
+  padding-block: 0.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+.caseBody > ul li:first-child {
+  padding-top: 0;
+}
+.caseBody > ul li:last-child {
+  border-bottom: 0;
+}
+
 .caseBody blockquote {
   margin: 0;
   padding-left: 1.5rem;

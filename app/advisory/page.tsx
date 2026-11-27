@@ -33,6 +33,7 @@ type Advisory = {
   challengesHeading: string;
   labels: { situation: string; bring: string; produces: string; proof: string };
   challenges: Challenge[];
+  challengeGroups?: { heading: string; count: number }[];
   methodHeading: string;
   steps: Step[];
   firstMonth?: {
@@ -56,6 +57,13 @@ export const metadata: Metadata = pageMeta(page.title, page.description);
 
 export default function AdvisoryPage() {
   const L = page.labels;
+  // Optional group headers over consecutive challenges; without them, one ungrouped list.
+  let start = 0;
+  const groups = (page.challengeGroups ?? [{ heading: "", count: page.challenges.length }]).map((g) => {
+    const out = { ...g, start };
+    start += g.count;
+    return out;
+  });
   return (
     <>
       <PageIntro eyebrow={page.eyebrow} title={page.headline} lead={page.intro} />
@@ -84,16 +92,23 @@ export default function AdvisoryPage() {
             {page.challengesHeading}
           </h2>
         </header>
-        <ol className={a.challenges}>
-          {page.challenges.map((c, i) => (
+        {groups.map((g) => {
+          const groupItems = page.challenges
+            .map((c, i) => ({ c, i }))
+            .slice(g.start, g.start + g.count);
+          return (
+            <div key={g.heading || "all"} className={a.group}>
+              {g.heading && <h3 className={a.groupHeading}>{g.heading}</h3>}
+              <ol className={a.challenges} start={g.start + 1}>
+                {groupItems.map(({ c, i }) => (
             <li key={c.title} className={i < 2 ? `${a.challenge} ${a.challengeLead}` : a.challenge}>
               <div className={a.challengeHead}>
                 <span className={a.num} aria-hidden="true">
                   {i + 1}
                 </span>
-                <h3 className={a.challengeTitle}>
+                <h4 className={a.challengeTitle}>
                   <Text>{c.title}</Text>
-                </h3>
+                </h4>
               </div>
               <div className={a.challengeBody}>
                 <dl className={a.facts}>
@@ -125,7 +140,10 @@ export default function AdvisoryPage() {
               </div>
             </li>
           ))}
-        </ol>
+              </ol>
+            </div>
+          );
+        })}
       </section>
 
       {/* Method */}

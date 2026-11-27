@@ -29,6 +29,20 @@
 
 /* ---------- Challenges ---------- */
 
+.group + .group {
+  margin-top: clamp(3rem, 2rem + 3vw, 5rem);
+}
+
+.groupHeading {
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--olive-text);
+  padding-bottom: 1rem;
+  margin-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+  border-bottom: 1px solid var(--rule);
+}
+
 .challenge {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));

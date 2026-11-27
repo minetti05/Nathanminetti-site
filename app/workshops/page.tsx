@@ -33,6 +33,7 @@ type Workshops = {
     before: string;
     afterLabel: string;
     after: string;
+    afterwards?: string;
     items: { time: string; title: string; detail?: string }[];
   };
   methodHeading: string;
@@ -173,6 +174,11 @@ export default function WorkshopsPage() {
                 <span className={s.label}>{page.agenda.afterLabel}</span>
                 <Text>{page.agenda.after}</Text>
               </p>
+              {page.agenda.afterwards && (
+                <p className={w.agendaAfterwards}>
+                  <Text>{page.agenda.afterwards}</Text>
+                </p>
+              )}
             </div>
           </section>
         )}
