@@ -1,0 +1,38 @@
+name: Fetch assets
+
+# Copies the original photographs, portrait and case-study stills listed in
+# scripts/assets-manifest.json into the repo, unaltered. Runs when the manifest
+# or script changes, or by hand from the Actions tab.
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/assets-manifest.json
+      - scripts/fetch_assets.py
+      - .github/workflows/fetch-assets.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fetch-assets
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/fetch_assets.py
+      - name: Commit downloaded files
+        run: |
+          git config user.name "asset-fetch"
+          git config user.email "actions@users.noreply.github.com"
+          git add public/images scripts/assets-report.txt
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git commit -m "Add original assets from manifest [skip ci]"
+          git push
