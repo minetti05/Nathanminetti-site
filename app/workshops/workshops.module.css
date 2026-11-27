@@ -1,0 +1,118 @@
+/* Flagship workshop: full width, set largest. A dark panel marks it out without decoration. */
+.flagship {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: 1.5rem;
+  background: var(--charcoal);
+  color: var(--warm-white);
+  /* Labels on the dark panel: a light warm grey that passes AA (about 10:1). */
+  --olive-text: #c9c8c1;
+  --rule: #4a4a48;
+  padding: clamp(2rem, 1rem + 4vw, 5rem) clamp(1.25rem, 0.5rem + 3vw, 4rem);
+}
+
+.flagship .format,
+.flagship .flagshipTitle,
+.flagship .flagshipSummary {
+  grid-column: 1 / span 8;
+}
+
+
+.flagshipTitle {
+  font-size: var(--fs-h1);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.012em;
+}
+
+.flagshipSummary {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-h3);
+  line-height: 1.25;
+}
+
+.flagshipOutputs {
+  grid-column: 9 / span 4;
+  grid-row: 1 / span 3;
+  align-self: end;
+}
+
+.format {
+  font-size: var(--fs-small);
+}
+.format > span {
+  margin-right: 0.5rem;
+}
+
+.outputs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: out;
+}
+.outputs li {
+  counter-increment: out;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  padding-block: 0.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+.outputs li::before {
+  content: counter(out);
+  font-size: var(--fs-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--olive-text);
+  padding-top: 0.2em;
+}
+.outputs li:last-child {
+  border-bottom: 0;
+}
+
+/* The other two: side by side, quieter */
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: 3.5rem;
+  margin-top: clamp(3rem, 2rem + 3vw, 5rem);
+}
+
+.workshop {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--ink);
+}
+
+.workshopTitle {
+  margin-top: 1rem;
+  font-size: var(--fs-h2);
+  font-weight: 300;
+  line-height: 1.05;
+}
+
+.workshopSummary {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  line-height: 1.3;
+  max-width: 26em;
+}
+
+@media (max-width: 62rem) {
+  .flagship .format,
+  .flagship .flagshipTitle,
+  .flagship .flagshipSummary,
+  .flagshipOutputs {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 48rem) {
+  .pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

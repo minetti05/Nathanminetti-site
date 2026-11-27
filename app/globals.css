@@ -98,7 +98,8 @@ img {
   height: auto;
 }
 
-ul {
+ul,
+ol {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -199,6 +200,13 @@ ul {
   padding: 0.05em 0.35em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
+}
+
+.ph-draft {
+  background: transparent;
+  color: var(--navy);
+  outline: 1px dashed var(--navy);
+  outline-offset: 1px;
 }
 
 @media (prefers-reduced-motion: reduce) {

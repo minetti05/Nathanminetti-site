@@ -22,6 +22,8 @@ Body text goes down here, in plain writing.
 
 **Placeholders:** anything you write in `[square brackets]` shows on the site as a yellow placeholder, so gaps are easy to spot. Delete the brackets once the real text is in.
 
+**Drafts:** text written as `[Draft for approval: …]` shows with a dashed blue outline. Once you approve it, delete the `[Draft for approval: ` at the start and the `]` at the end.
+
 You can edit on github.com: open the file, click the pencil, change the text, then click **Commit changes**. Vercel rebuilds within a minute or two.
 
 ### The homepage
@@ -88,7 +90,14 @@ An optional one-paragraph artist statement.
 `site.config.ts` holds the site-wide settings:
 
 - `brandsAndCulture.enabled`: `false` hides Brands & Culture from the navigation, homepage and footer, and makes its page return "not found". Change it to `true` to launch it.
+- `photography.enabled`: `false` hides Photography from the navigation, homepage and footer. Turn it on once the gallery pages are built.
 - Contact email and LinkedIn link.
+
+---
+
+## Copying images from the old site
+
+`.github/workflows/fetch-assets.yml` downloads every file listed in `scripts/assets-manifest.json` into the repo, byte for byte. It never resizes or overwrites anything, and it writes a report to `scripts/assets-report.txt`. It runs whenever the manifest changes. You can also run it from the **Actions** tab on GitHub.
 
 ---
 
@@ -119,4 +128,4 @@ npm run build
 
 - `content/` holds the copy (MDX with YAML front matter, read by `lib/content.ts`)
 - `app/` holds the routes and `components/` the shared UI
-- Build stage tracker: stages 1–2 are done (foundations, homepage); stages 3–5 are still to come
+- Build order: foundations, homepage, Advisory, Workshops, Work, About, Contact, Photography, launch

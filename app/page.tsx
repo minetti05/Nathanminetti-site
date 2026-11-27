@@ -12,12 +12,20 @@ type HomeContent = {
   title: string;
   description: string;
   hero: { headline: string; copy: string; primaryCta: Cta; secondaryCta: Cta };
+  intro?: { draft?: boolean; text: string };
   whatIDo: {
     heading: string;
-    items: { title: string; line: string; href: string; requires?: "brandsAndCulture" }[];
+    items: {
+      title: string;
+      line: string;
+      body?: string;
+      linkLabel: string;
+      href: string;
+      requires?: "brandsAndCulture";
+    }[];
   };
   selectedWork: { heading: string; linkLabel: string };
-  recognition: { heading: string; items: string[] };
+  recognition: { heading: string; items: { award: string; project: string; href: string }[] };
   photography: { heading: string; linkLabel: string };
   closing: { headline: string; cta: Cta };
 };
@@ -29,13 +37,19 @@ export const metadata: Metadata = {
   description: home.description,
 };
 
-function WorkEntry({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
-  const img = caseImage(c);
+async function WorkEntry({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
+  const img = await caseImage(c);
   return (
     <article className={lead ? styles.workLead : styles.workItem}>
       <Link href={`/work/${c.slug}`} className={styles.workLink}>
         <div className={styles.workMedia}>
-          <CaseMedia src={img?.src ?? null} alt={img?.alt ?? ""} client={c.client} priority={lead} />
+          <CaseMedia
+            src={img?.src ?? null}
+            alt={img?.alt ?? ""}
+            fit={img?.fit}
+            client={c.client}
+            priority={lead}
+          />
         </div>
         <div className={styles.workText}>
           <p className={styles.workClient}>
@@ -64,13 +78,15 @@ function WorkEntry({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
 }
 
 export default function HomePage() {
-  const { hero, whatIDo, selectedWork, recognition, photography, closing } = home;
+  const { hero, intro, whatIDo, selectedWork, recognition, photography, closing } = home;
 
   const services = whatIDo.items.filter(
     (item) => !item.requires || siteConfig[item.requires].enabled,
   );
   const [leadCase, ...otherCases] = getFeaturedWork().slice(0, 6);
-  const projects = getPhotoProjects();
+  const projects = siteConfig.photography.enabled
+    ? getPhotoProjects().filter((p) => p.images.length > 0)
+    : [];
   const leadProject = projects.find((p) => p.homepageLead) ?? projects[0];
   const otherProjects = projects.filter((p) => p !== leadProject);
   const leadImage = leadProject?.images[0];
@@ -97,6 +113,16 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Introduction */}
+      {intro?.text && (
+        <section className={`wrap ${styles.intro}`} aria-label="Introduction">
+          {intro.draft && <p className={`ph ${styles.draftTag}`}>Draft for approval</p>}
+          <p className={styles.introText}>
+            <Text>{intro.text}</Text>
+          </p>
+        </section>
+      )}
+
       {/* What I Do */}
       <section className={`wrap ${styles.section}`} aria-labelledby="what-heading">
         <header className={styles.sectionHead}>
@@ -111,9 +137,17 @@ export default function HomePage() {
                 <h3 className={styles.serviceTitle}>
                   <Text>{s.title}</Text>
                 </h3>
-                <p className={styles.serviceLine}>
-                  <Text>{s.line}</Text>
-                </p>
+                <div className={styles.serviceText}>
+                  <p className={styles.serviceLine}>
+                    <Text>{s.line}</Text>
+                  </p>
+                  {s.body && (
+                    <p className={styles.serviceBody}>
+                      <Text>{s.body}</Text>
+                    </p>
+                  )}
+                  <span className={styles.serviceLink}>{s.linkLabel}</span>
+                </div>
               </Link>
             </li>
           ))}
@@ -146,8 +180,15 @@ export default function HomePage() {
           </h2>
           <ul className={styles.awards}>
             {recognition.items.map((a) => (
-              <li key={a}>
-                <Text>{a}</Text>
+              <li key={a.award + a.project}>
+                <Link href={a.href} className={styles.award}>
+                  <span className={styles.awardName}>
+                    <Text>{a.award}</Text>
+                  </span>
+                  <span className={styles.awardProject}>
+                    <Text>{a.project}</Text>
+                  </span>
+                </Link>
               </li>
             ))}
           </ul>
@@ -167,7 +208,7 @@ export default function HomePage() {
           </header>
           <div className={styles.photo}>
             <Link href={`/photography/${leadProject.slug}`} className={styles.photoLead}>
-              {leadImage?.src && leadImage.width && leadImage.height ? (
+              {leadImage?.src && leadImage.width && leadImage.height && (
                 // Shown at its original aspect ratio: never cropped.
                 <Image
                   src={leadImage.src}
@@ -177,13 +218,6 @@ export default function HomePage() {
                   sizes="(min-width: 62rem) 66vw, 100vw"
                   className={styles.photoImg}
                 />
-              ) : (
-                <div className={styles.photoEmpty}>
-                  <span className={styles.photoEmptyTitle} aria-hidden="true">
-                    {leadProject.title}
-                  </span>
-                  <span className="ph">[Photographs needed: original files for this project]</span>
-                </div>
               )}
               <h3 className={styles.photoTitle}>{leadProject.title}</h3>
             </Link>

@@ -11,7 +11,7 @@ export function Text({ children }: { children?: string | null }) {
     <>
       {parts.map((part, i) =>
         /^\[[^\]]+\]$/.test(part) ? (
-          <span key={i} className="ph" data-placeholder>
+          <span key={i} className={part.startsWith("[Draft") ? "ph ph-draft" : "ph"} data-placeholder>
             {part}
           </span>
         ) : (

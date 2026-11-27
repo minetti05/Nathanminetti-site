@@ -26,9 +26,9 @@
   color: var(--olive); /* large type: olive is permitted at this size */
 }
 
-.emptyNote {
-  position: absolute;
-  top: 1rem;
-  left: 1.25rem;
-  font-size: var(--fs-label);
+
+/* Square artwork (album covers): shown whole, centred in the frame */
+.frame[data-fit="contain"] .img {
+  object-fit: contain;
+  padding: clamp(1rem, 0.5rem + 2vw, 2.5rem);
 }

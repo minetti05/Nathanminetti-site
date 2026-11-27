@@ -6,7 +6,7 @@ description: "I help brands and businesses unlock growth through strategic partn
 
 hero:
   headline: "Building connections between brands, business and culture."
-  copy: "I help brands and businesses unlock growth through strategic partnerships, creative innovation and cultural collaboration. Drawing on nearly two decades across global brands, agencies and entertainment, I connect organizations, ideas and opportunities to create meaningful commercial outcomes."
+  copy: "I help brands and businesses unlock growth through strategic partnerships, creative innovation and cultural collaboration. Drawing on 20 years across global brands, agencies and entertainment, I connect organizations, ideas and opportunities to create meaningful commercial outcomes."
   primaryCta:
     label: "Explore Advisory"
     href: "/advisory"
@@ -14,18 +14,30 @@ hero:
     label: "View Selected Work"
     href: "/work"
 
+# Short personal introduction, between the hero and What I Do.
+# draft: true shows a "Draft for approval" tag above it. Set to false once approved.
+intro:
+  draft: true
+  text: "I'm Nathan Minetti, a Brooklyn-based business and marketing leader. I've spent 20 years in senior leadership and client partnership roles at Publicis Groupe, WPP and IPG agencies, on brands including Coca-Cola, Mastercard, Pfizer, Samsung and Walmart. My work has ranged from global account leadership to partnerships with Warner Bros., Nickelodeon and the ten artists behind Mastercard's first album. I connect business, partnerships and culture because the most valuable opportunities emerge when different organizations, disciplines and perspectives come together."
+
 whatIDo:
   heading: "What I Do"
   items:
     - title: "Strategic Advisory"
       line: "Finding opportunity. Building relationships. Creating commercial value."
+      body: "For brands, agencies and businesses looking for their next growth opportunity, or the right partner to unlock it. I help identify where the value is, develop strategic partnerships and turn ambitious ideas into commercially meaningful initiatives. Engagements range from focused strategy projects to ongoing advisory and fractional leadership."
+      linkLabel: "Explore Advisory"
       href: "/advisory"
     - title: "Executive Workshops"
       line: "Turning strategic thinking into new opportunities."
+      body: "Focused, collaborative half-day or full-day workshops for brands, agencies and entertainment businesses. They help leadership teams identify growth opportunities, develop meaningful partnerships and connect their business to culture, and finish with clear priorities and next steps."
+      linkLabel: "Explore Workshops"
       href: "/workshops"
     # Shown only when brandsAndCulture.enabled is true in site.config.ts
     - title: "Brands & Culture"
       line: "An independent perspective on the relationship between brands, business and culture."
+      body: ""
+      linkLabel: "Read Brands & Culture"
       href: "/brands-and-culture"
       requires: brandsAndCulture
 
@@ -36,20 +48,33 @@ selectedWork:
 
 recognition:
   heading: "Recognition"
+  # Each award is paired with its project. href links to the case study.
   items:
-    - "Adweek Media Plan of the Year"
-    - "Gold Atlanta Addy"
-    - "Effie finalist and nominee"
-    - "Vetty"
+    - award: "Adweek Media Plan of the Year"
+      project: "ACC Boroughbreds"
+      href: "/work/acc-boroughbreds"
+    - award: "Gold Atlanta Addy"
+      project: "Walmart x Google: Background Joys"
+      href: "/work/walmart-background-joys"
+    - award: "Effie finalist"
+      project: "Amtrak: Get Carried Away"
+      href: "/work/amtrak-get-carried-away"
+    - award: "Effie nominee"
+      project: "L'Oréal Paris: Does What It Says"
+      href: "/work#loreal-paris-revitalift"
+    - award: "Vetty Award (2019)"
+      project: "Zoetis: Vet Tech Week"
+      href: "/work#zoetis-petcare"
 
 photography:
   heading: "Photography"
   # Projects come from /content/photography. The one marked homepageLead is shown large.
+  # Hidden while photography.enabled is false in site.config.ts
   linkLabel: "Photography"
 
 closing:
   headline: "Let's explore what we can build together."
   cta:
-    label: "Contact"
+    label: "Start a conversation"
     href: "/contact"
 ---

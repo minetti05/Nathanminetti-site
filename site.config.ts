@@ -16,6 +16,15 @@ export const siteConfig = {
   brandsAndCulture: {
     enabled: false,
   },
+
+  /**
+   * Photography: off until the original image files are in /public/images/photography.
+   * false → removed from the nav, homepage and footer; the pages return 404.
+   * true  → appears everywhere. Only projects that have images listed are shown.
+   */
+  photography: {
+    enabled: false,
+  },
 } as const;
 
 export type NavItem = { label: string; href: string };
@@ -26,7 +35,7 @@ export function getNavItems(): NavItem[] {
     { label: "Advisory", href: "/advisory" },
     { label: "Workshops", href: "/workshops" },
     { label: "Selected Work", href: "/work" },
-    { label: "Photography", href: "/photography" },
+    ...(siteConfig.photography.enabled ? [{ label: "Photography", href: "/photography" }] : []),
     { label: "About", href: "/about" },
   ];
   if (siteConfig.brandsAndCulture.enabled) {

@@ -1,0 +1,251 @@
+/*
+ * Shared building blocks for inner pages (Advisory, Workshops, and the pages to come).
+ * Same grammar as the homepage: 12 columns, hairlines, serif set large.
+ */
+
+/* ---------- Page intro ---------- */
+
+.intro {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  padding-top: clamp(3.5rem, 1.5rem + 6vw, 8rem);
+}
+
+.title {
+  grid-column: 1 / -1;
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.015em;
+}
+
+.sub {
+  grid-column: 1 / span 9;
+  margin-top: clamp(1.25rem, 0.75rem + 1.5vw, 2rem);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.lead {
+  grid-column: 7 / span 6;
+  margin-top: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ink);
+  font-size: var(--fs-lead);
+  line-height: 1.55;
+}
+
+/* ---------- Section frame ---------- */
+
+.section {
+  padding-top: var(--section);
+}
+
+.sectionHead {
+  padding-top: 1rem;
+  border-top: 1px solid var(--ink);
+  margin-bottom: clamp(2rem, 1rem + 3vw, 4rem);
+}
+
+.sectionTitle {
+  font-size: var(--fs-h3);
+}
+
+/* ---------- Rows: title in a rail, content beside ---------- */
+
+.rows {
+  border-top: 1px solid var(--ink);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: 1.5rem;
+  padding-block: clamp(2rem, 1.25rem + 2.5vw, 3.5rem);
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+
+.rowTitle {
+  grid-column: 1 / span 4;
+  font-size: var(--fs-h2);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.rowList {
+  grid-column: 5 / span 4;
+  display: grid;
+  align-content: start;
+}
+.rowList li {
+  padding-block: 0.55rem;
+  border-bottom: 1px solid var(--rule);
+}
+.rowList li:first-child {
+  padding-top: 0;
+}
+.rowList li:last-child {
+  border-bottom: 0;
+}
+
+.rowAside {
+  grid-column: 10 / span 3;
+}
+
+.label {
+  font-size: var(--fs-label);
+  font-weight: 500;
+  color: var(--olive-text);
+  margin-bottom: 0.75rem;
+}
+
+/* Small linked case studies */
+.proof {
+  display: grid;
+  gap: 1.25rem;
+}
+.proofLink {
+  display: grid;
+  gap: 0.6rem;
+}
+.proofLink:hover .proofTitle {
+  color: var(--navy);
+}
+.proofLink:hover img {
+  transform: scale(1.015);
+}
+.proofClient {
+  font-size: var(--fs-label);
+  color: var(--olive-text);
+}
+.proofTitle {
+  font-family: var(--font-serif);
+  font-size: 1.375rem;
+  line-height: 1.15;
+  transition: color var(--t-fast) var(--ease);
+}
+
+/* ---------- Inline list set large (Who I Work With) ---------- */
+
+.cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0;
+  font-family: var(--font-serif);
+  font-size: var(--fs-h2);
+  font-weight: 300;
+  line-height: 1.2;
+}
+.cloud li::after {
+  content: "/";
+  color: var(--olive);
+  margin-inline: 0.45em;
+}
+.cloud li:last-child::after {
+  content: none;
+}
+
+/* ---------- Steps (Assess → Develop → Activate) ---------- */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  counter-reset: step;
+}
+
+.step {
+  counter-increment: step;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ink);
+}
+.step::before {
+  content: counter(step);
+  display: block;
+  font-size: var(--fs-label);
+  font-weight: 500;
+  color: var(--olive-text);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 1.5rem;
+}
+
+.stepName {
+  font-family: var(--font-serif);
+  font-size: var(--fs-h2);
+  font-weight: 300;
+  line-height: 1.05;
+}
+
+.note {
+  margin-top: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+  font-size: var(--fs-lead);
+  max-width: 34em;
+}
+
+/* ---------- Closing call to action ---------- */
+
+.cta {
+  padding-top: var(--section);
+}
+
+.ctaLink {
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.015em;
+  max-width: 13em;
+  text-wrap: balance;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.12em;
+  text-decoration-color: var(--olive);
+  transition:
+    color var(--t-fast) var(--ease),
+    text-decoration-color var(--t-fast) var(--ease);
+}
+.ctaLink:hover {
+  color: var(--navy);
+  text-decoration-color: var(--navy);
+}
+
+/* ---------- Narrow screens ---------- */
+
+@media (max-width: 62rem) {
+  .lead {
+    grid-column: 4 / -1;
+  }
+  .rowTitle {
+    grid-column: 1 / -1;
+  }
+  .rowList {
+    grid-column: 1 / span 7;
+  }
+  .rowAside {
+    grid-column: 9 / span 4;
+  }
+}
+
+@media (max-width: 48rem) {
+  .sub,
+  .lead,
+  .rowList,
+  .rowAside {
+    grid-column: 1 / -1;
+  }
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1.5rem;
+  }
+  .step::before {
+    margin-bottom: 0.5rem;
+  }
+}

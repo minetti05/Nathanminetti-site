@@ -370,6 +370,11 @@
    "type": "oembed",
    "url": "https://open.spotify.com/oembed?url=https://open.spotify.com/album/1x0mD3BqLLlK1JOYhZB9wd",
    "dest": "public/images/work/mastercard-priceless-album.jpg"
+  },
+  {
+   "type": "original",
+   "url": "https://i.scdn.co/image/ab67616d0000b27398f72327b6aba4691ef73d20",
+   "dest": "public/images/work/mastercard-priceless-album-640.jpg"
   }
  ]
 }

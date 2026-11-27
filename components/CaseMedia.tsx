@@ -6,17 +6,19 @@ import styles from "./CaseMedia.module.css";
 /**
  * The image for a case study card. Uses a supplied still, else the YouTube thumbnail
  * (falling back from max-res to high-quality when YouTube has no max-res version).
- * With no image at all it shows a typographic placeholder that says what is missing.
+ * With no image at all it shows a quiet typographic frame with the client's name.
  */
 export function CaseMedia({
   src,
   alt,
   client,
+  fit = "cover",
   priority = false,
 }: {
   src: string | null;
   alt: string;
   client: string;
+  fit?: "cover" | "contain";
   priority?: boolean;
 }) {
   const [current, setCurrent] = useState(src);
@@ -28,13 +30,12 @@ export function CaseMedia({
         <span className={styles.emptyClient} aria-hidden="true">
           {client}
         </span>
-        <span className={`ph ${styles.emptyNote}`}>[Still needed]</span>
       </div>
     );
   }
 
   return (
-    <div className={styles.frame}>
+    <div className={styles.frame} data-fit={fit}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={current}
