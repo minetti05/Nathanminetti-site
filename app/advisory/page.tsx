@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/meta";
-import { ClosingCta, PageIntro, ProofList, Steps, pageStyles as s, type Step } from "@/components/PageBlocks";
+import {
+  ClosingCta,
+  DraftTag,
+  PageIntro,
+  ProofList,
+  Steps,
+  pageStyles as s,
+  type Step,
+} from "@/components/PageBlocks";
 import { Text } from "@/components/Text";
 import { getPage } from "@/lib/content";
 import a from "./advisory.module.css";
@@ -27,6 +35,13 @@ type Advisory = {
   challenges: Challenge[];
   methodHeading: string;
   steps: Step[];
+  firstMonth?: {
+    heading: string;
+    draft?: boolean;
+    note: string;
+    outputLabel: string;
+    weeks: { label: string; stage: string; what: string; output: string }[];
+  };
   engagementsHeading: string;
   engagements: { name: string; what: string; goodFor: string }[];
   goodForLabel: string;
@@ -71,7 +86,7 @@ export default function AdvisoryPage() {
         </header>
         <ol className={a.challenges}>
           {page.challenges.map((c, i) => (
-            <li key={c.title} className={a.challenge}>
+            <li key={c.title} className={i < 2 ? `${a.challenge} ${a.challengeLead}` : a.challenge}>
               <div className={a.challengeHead}>
                 <span className={a.num} aria-hidden="true">
                   {i + 1}
@@ -122,6 +137,39 @@ export default function AdvisoryPage() {
         </header>
         <Steps steps={page.steps} />
       </section>
+
+      {/* A typical first month (illustrative) */}
+      {page.firstMonth && (
+        <section className={`wrap ${s.section}`} aria-labelledby="month-heading">
+          <header className={s.sectionHead}>
+            <h2 id="month-heading" className={s.sectionTitle}>
+              {page.firstMonth.heading}
+            </h2>
+          </header>
+          <div className={a.monthNote}>
+            <DraftTag show={!!page.firstMonth.draft} />
+            <p>
+              <Text>{page.firstMonth.note}</Text>
+            </p>
+          </div>
+          <ol className={a.weeks}>
+            {page.firstMonth.weeks.map((w) => (
+              <li key={w.label} className={a.week}>
+                <p className={s.label}>
+                  {w.label} · {w.stage}
+                </p>
+                <p className={a.weekWhat}>
+                  <Text>{w.what}</Text>
+                </p>
+                <p className={s.label}>{page.firstMonth!.outputLabel}</p>
+                <p className={a.weekOutput}>
+                  <Text>{w.output}</Text>
+                </p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
 
       {/* Engagement types */}
       <section className={`wrap ${s.section}`} aria-labelledby="engage-heading">

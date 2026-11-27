@@ -85,6 +85,56 @@
   border-top: 1px solid var(--rule);
 }
 
+/* The first two challenges carry a little more weight: larger title and lead line */
+.challengeLead .challengeTitle {
+  font-size: var(--fs-h1);
+  line-height: 1.02;
+}
+.challengeLead .facts > div:first-child dd {
+  font-family: var(--font-serif);
+  font-size: clamp(1.375rem, 1.15rem + 0.8vw, 1.75rem);
+  line-height: 1.3;
+}
+.challenge:not(.challengeLead) .challengeTitle {
+  font-size: var(--fs-h3);
+  line-height: 1.12;
+}
+
+/* ---------- A typical first month ---------- */
+
+.monthNote {
+  max-width: 40em;
+  margin-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+  font-size: var(--fs-small);
+  color: var(--olive-text);
+}
+.monthNote :global(.ph) {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.weeks {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: 2rem;
+}
+
+.week {
+  padding-top: 1rem;
+  border-top: 1px solid var(--ink);
+}
+
+.weekWhat {
+  margin-bottom: 1.25rem;
+}
+
+.weekOutput {
+  font-family: var(--font-serif);
+  font-size: clamp(1.125rem, 1rem + 0.4vw, 1.3125rem);
+  line-height: 1.3;
+}
+
 /* ---------- Engagement types ---------- */
 
 .engagements {
@@ -133,6 +183,15 @@
     grid-column: 1 / -1;
   }
   .engagements {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .weeks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 48rem) {
+  .weeks {
     grid-template-columns: minmax(0, 1fr);
   }
 }

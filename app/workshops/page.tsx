@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/meta";
-import { ClosingCta, PageIntro, Steps, pageStyles as s, type Step } from "@/components/PageBlocks";
+import { ClosingCta, DraftTag, PageIntro, Steps, pageStyles as s, type Step } from "@/components/PageBlocks";
 import { Text } from "@/components/Text";
 import { getPage } from "@/lib/content";
 import w from "./workshops.module.css";
@@ -25,6 +25,16 @@ type Workshops = {
   how: { label: string; value: string }[];
   labels: { problem: string; attend: string; method: string; deliverables: string; outcome: string };
   workshops: Workshop[];
+  agenda?: {
+    heading: string;
+    draft?: boolean;
+    note: string;
+    beforeLabel: string;
+    before: string;
+    afterLabel: string;
+    after: string;
+    items: { time: string; title: string; detail?: string }[];
+  };
   methodHeading: string;
   steps: Step[];
   cta: { label: string; href: string };
@@ -123,6 +133,48 @@ export default function WorkshopsPage() {
             </header>
             <WorkshopBody ws={flagship} />
           </article>
+        )}
+
+        {/* Sample agenda for the flagship (illustrative) */}
+        {page.agenda && (
+          <section className={w.agenda} aria-labelledby="agenda-heading">
+            <header className={w.agendaHead}>
+              <h3 id="agenda-heading" className={w.agendaTitle}>
+                {page.agenda.heading}
+              </h3>
+              <DraftTag show={!!page.agenda.draft} />
+              <p className={w.agendaNote}>
+                <Text>{page.agenda.note}</Text>
+              </p>
+            </header>
+            <div className={w.agendaBody}>
+              <p className={w.agendaEdge}>
+                <span className={s.label}>{page.agenda.beforeLabel}</span>
+                <Text>{page.agenda.before}</Text>
+              </p>
+              <ol className={w.agendaList}>
+                {page.agenda.items.map((it) => (
+                  <li key={it.time} className={w.agendaItem}>
+                    <span className={w.agendaTime}>{it.time}</span>
+                    <span>
+                      <span className={w.agendaItemTitle}>
+                        <Text>{it.title}</Text>
+                      </span>
+                      {it.detail && (
+                        <span className={w.agendaDetail}>
+                          <Text>{it.detail}</Text>
+                        </span>
+                      )}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+              <p className={w.agendaEdge}>
+                <span className={s.label}>{page.agenda.afterLabel}</span>
+                <Text>{page.agenda.after}</Text>
+              </p>
+            </div>
+          </section>
         )}
 
         {others.map((ws) => (
