@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import Link from "next/link";
 import { Photo } from "@/components/Photo";
 import { CaseMedia } from "@/components/CaseMedia";
@@ -32,10 +33,7 @@ type HomeContent = {
 
 const home = getPage<HomeContent>("home");
 
-export const metadata: Metadata = {
-  title: { absolute: home.title },
-  description: home.description,
-};
+export const metadata: Metadata = pageMeta(home.title, home.description, { absolute: true });
 
 async function WorkEntry({ c, lead = false }: { c: CaseStudy; lead?: boolean }) {
   const img = await caseImage(c);
@@ -72,6 +70,32 @@ async function WorkEntry({ c, lead = false }: { c: CaseStudy; lead?: boolean }) 
   );
 }
 
+/** Person + ProfessionalService structured data. Facts only from site config and copy. */
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${siteConfig.url}/#person`,
+      name: siteConfig.name,
+      url: siteConfig.url,
+      email: `mailto:${siteConfig.email}`,
+      sameAs: [siteConfig.linkedin],
+      address: { "@type": "PostalAddress", addressLocality: "Brooklyn", addressRegion: "NY", addressCountry: "US" },
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": `${siteConfig.url}/#practice`,
+      name: siteConfig.name,
+      url: siteConfig.url,
+      description: home.description,
+      founder: { "@id": `${siteConfig.url}/#person` },
+      address: { "@type": "PostalAddress", addressLocality: "Brooklyn", addressRegion: "NY", addressCountry: "US" },
+      email: siteConfig.email,
+    },
+  ],
+};
+
 export default function HomePage() {
   const { hero, intro, whatIDo, selectedWork, recognition, photography, closing } = home;
 
@@ -88,6 +112,12 @@ export default function HomePage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        // JSON.stringify output with "<" escaped, so the content can't close the script tag.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
+
       {/* Hero */}
       <section className={`wrap ${styles.hero}`} aria-labelledby="hero-heading">
         <h1 id="hero-heading" className={styles.heroHeadline}>

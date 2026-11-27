@@ -51,6 +51,7 @@
 .formCol {
   grid-column: 7 / span 6;
   padding-top: 0.5rem;
+  min-height: 34rem; /* reserves the form's space so the page doesn't shift as it appears */
 }
 
 @media (max-width: 62rem) {

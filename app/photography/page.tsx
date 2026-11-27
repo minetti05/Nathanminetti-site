@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DraftTag } from "@/components/PageBlocks";
@@ -11,7 +12,7 @@ import styles from "./photography.module.css";
 type PhotoPage = { title: string; description: string; intro?: string; introDraft?: boolean };
 const page = getPage<PhotoPage>("photography");
 
-export const metadata: Metadata = { title: page.title, description: page.description };
+export const metadata: Metadata = pageMeta(page.title, page.description);
 
 export default function PhotographyIndex() {
   if (!siteConfig.photography.enabled) notFound();
@@ -41,11 +42,6 @@ export default function PhotographyIndex() {
                 </Link>
               </h2>
               <p className={styles.count}>{p.images.length} photographs</p>
-              {p.body && (
-                <p className={styles.rowStatement}>
-                  <Text>{p.body}</Text>
-                </p>
-              )}
             </div>
             {/* A contact strip: the first three frames, each whole at its own proportions. */}
             <div className={styles.strip}>
@@ -62,6 +58,15 @@ export default function PhotographyIndex() {
                 />
               ))}
             </div>
+            {p.body && (
+              <div className={styles.rowStatement}>
+                {p.body.split(/\n\s*\n/).map((para, k) => (
+                  <p key={k}>
+                    <Text>{para}</Text>
+                  </p>
+                ))}
+              </div>
+            )}
           </li>
         ))}
       </ol>

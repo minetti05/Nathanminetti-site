@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MediaPlayer } from "@/components/MediaPlayer";
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const c = getFeaturedWork().find((w) => w.slug === slug);
   if (!c) return {};
-  return { title: `${c.client}: ${c.project}`, description: strip(c.dek) };
+  return pageMeta(`${c.client}: ${c.project}`, strip(c.dek));
 }
 
 export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {

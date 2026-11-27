@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import { ClosingCta, pageStyles as s } from "@/components/PageBlocks";
 import { Photo } from "@/components/Photo";
 import { Text } from "@/components/Text";
@@ -24,7 +25,7 @@ type About = {
 
 const page = getPage<About>("about");
 
-export const metadata: Metadata = { title: page.title, description: page.description };
+export const metadata: Metadata = pageMeta(page.title, page.description);
 
 /** Reads the portrait's real size so it is shown at its own proportions. */
 function portraitSize(src: string) {

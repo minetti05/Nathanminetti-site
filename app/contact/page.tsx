@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import { Suspense } from "react";
 import { ContactForm, type FormCopy } from "@/components/ContactForm";
 import { Text } from "@/components/Text";
@@ -19,7 +20,7 @@ type Contact = {
 
 const page = getPage<Contact>("contact");
 
-export const metadata: Metadata = { title: page.title, description: page.description };
+export const metadata: Metadata = pageMeta(page.title, page.description);
 
 export default function ContactPage() {
   return (

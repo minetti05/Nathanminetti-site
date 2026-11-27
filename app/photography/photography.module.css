@@ -29,11 +29,17 @@
   font-size: var(--fs-label);
 }
 
+/* The series statement sits under its contact strip, in the same column */
 .rowStatement {
-  margin-top: 1.25rem;
+  grid-column: 5 / span 7;
+  position: relative;
+  z-index: 2; /* above the row's stretched link, so the text can be selected */
   font-size: var(--fs-small);
-  line-height: 1.6;
-  max-width: 32em;
+  line-height: 1.65;
+  max-width: 40em;
+}
+.rowStatement p + p {
+  margin-top: 0.9rem;
 }
 
 .series {
@@ -119,9 +125,13 @@
 }
 
 .statement {
-  margin-top: 2rem;
+  margin-top: clamp(2rem, 1.5rem + 2vw, 3rem);
   max-width: 36em;
   font-size: var(--fs-lead);
+  line-height: 1.6;
+}
+.statement p + p {
+  margin-top: 1.1rem;
 }
 
 .plates {
@@ -145,11 +155,10 @@
 
 /* Shown whole: bounded by the screen's width and height, never cropped or stretched */
 .plateImg {
-  width: auto;
-  height: auto;
-  max-width: min(100%, 64rem);
-  max-height: 86vh;
-  max-height: 86svh;
+  height: auto; /* width comes from the photo's own proportions (set inline) */
+}
+.figure {
+  width: 100%;
 }
 
 .plateNum {
@@ -196,6 +205,7 @@
 
 @media (max-width: 62rem) {
   .seriesText,
+  .rowStatement,
   .strip {
     grid-column: 1 / -1;
   }

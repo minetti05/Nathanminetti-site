@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import { ClosingCta, PageIntro, Steps, pageStyles as s, type Step } from "@/components/PageBlocks";
 import { Text } from "@/components/Text";
 import { getPage } from "@/lib/content";
@@ -32,7 +33,7 @@ type Workshops = {
 const page = getPage<Workshops>("workshops");
 const L = page.labels;
 
-export const metadata: Metadata = { title: page.title, description: page.description };
+export const metadata: Metadata = pageMeta(page.title, page.description);
 
 /** Problem, audience, methodology, deliverables and outcome: the same template for every workshop. */
 function WorkshopBody({ ws }: { ws: Workshop }) {

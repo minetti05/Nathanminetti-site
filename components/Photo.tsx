@@ -1,8 +1,9 @@
 import Image from "next/image";
 
 /**
- * One photograph, exactly as supplied: original file, original proportions, never cropped.
- * `unoptimized` serves the original file itself rather than a recompressed copy.
+ * One photograph at its original proportions, never cropped, recolored or rotated.
+ * The original file stays untouched in /public. Visitors get a copy resized to the
+ * size it is shown at, at quality 90 (visually identical), so pages load fast on phones.
  */
 export function Photo({
   src,
@@ -12,6 +13,7 @@ export function Photo({
   sizes,
   className,
   priority = false,
+  style,
 }: {
   src: string;
   alt: string;
@@ -20,6 +22,7 @@ export function Photo({
   sizes: string;
   className?: string;
   priority?: boolean;
+  style?: React.CSSProperties;
 }) {
   return (
     <Image
@@ -30,7 +33,8 @@ export function Photo({
       sizes={sizes}
       className={className}
       priority={priority}
-      unoptimized
+      quality={90}
+      style={style}
     />
   );
 }

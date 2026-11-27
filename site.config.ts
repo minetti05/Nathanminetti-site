@@ -9,6 +9,14 @@ export const siteConfig = {
   linkedin: "https://www.linkedin.com/in/nathanminetti",
 
   /**
+   * Search engines. false = every page carries noindex and robots.txt blocks crawlers.
+   * Switch to true only on launch day, once nathanminetti.com points at Vercel.
+   */
+  launch: {
+    indexable: false,
+  },
+
+  /**
    * Brands & Culture is built but hidden at launch.
    * false → removed from the nav, homepage, footer and sitemap; the page returns 404.
    * true  → appears everywhere automatically.

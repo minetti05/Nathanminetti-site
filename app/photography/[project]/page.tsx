@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Photo } from "@/components/Photo";
@@ -17,7 +18,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ project: string }> }): Promise<Metadata> {
   const { project } = await params;
   const p = projects().find((x) => x.slug === project);
-  return p ? { title: `${p.title} · Photography`, description: `${p.title}: ${p.images.length} instant film photographs by Nathan Minetti.` } : {};
+  return p ? pageMeta(`${p.title} · Photography`, `${p.title}: ${p.images.length} instant film photographs by Nathan Minetti.`) : {};
 }
 
 export default async function Gallery({ params }: { params: Promise<{ project: string }> }) {
@@ -41,9 +42,13 @@ export default async function Gallery({ params }: { params: Promise<{ project: s
         <h1 className={styles.galleryTitle}>{p.title}</h1>
         <p className={styles.count}>{p.images.length} photographs</p>
         {p.body && (
-          <p className={styles.statement}>
-            <Text>{p.body}</Text>
-          </p>
+          <div className={styles.statement}>
+            {p.body.split(/\n\s*\n/).map((para, k) => (
+              <p key={k}>
+                <Text>{para}</Text>
+              </p>
+            ))}
+          </div>
         )}
       </header>
 
@@ -60,6 +65,8 @@ export default async function Gallery({ params }: { params: Promise<{ project: s
                 sizes="(min-width: 62rem) 60vw, 92vw"
                 className={styles.plateImg}
                 priority={n === 0}
+                // Width set from the photo's own proportions, so its space is reserved before it loads
+                style={{ width: `min(100%, 64rem, calc(86svh * ${img.width} / ${img.height}))` }}
               />
               <figcaption className={styles.plateNum}>
                 {String(n + 1).padStart(2, "0")} / {total}

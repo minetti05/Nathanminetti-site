@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/meta";
 import Link from "next/link";
 import { CaseMedia } from "@/components/CaseMedia";
 import { Text } from "@/components/Text";
 import { caseImage, getAllWork, type CaseStudy } from "@/lib/content";
 import styles from "./work.module.css";
 
-export const metadata: Metadata = {
-  title: "Selected Work",
-  description:
-    "Case studies in strategic partnerships, creative innovation and cultural collaboration for Walmart, Mastercard, Amtrak, Coca-Cola and more.",
-};
+export const metadata: Metadata = pageMeta(
+  "Selected Work",
+  "Case studies in strategic partnerships, creative innovation and cultural collaboration for Walmart, Mastercard, Amtrak, Coca-Cola and more.",
+);
 
 const watchUrl = (c: CaseStudy, id?: string) => {
   const m = c.media;
